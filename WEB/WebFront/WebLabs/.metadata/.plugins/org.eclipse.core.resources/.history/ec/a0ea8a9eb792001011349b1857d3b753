@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+	1. HTML is the standard markup language for creating Web pages
+	2. html5 웹 표준
+	3. web 브라우저(소프트웨어) : 해석 화면에 출력(파서) : html, css, javascript, text, json, xml, image...만 해석가능
+	4. 크롬 (개발자 도구 : F12) : 디버깅, 네트워크 정보, 소스 정보
+ -->
+
+
+</body>
+</html>

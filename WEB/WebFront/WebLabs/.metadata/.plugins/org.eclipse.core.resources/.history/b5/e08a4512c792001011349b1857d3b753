@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		/*javascript*/	
+	</script>
+	<style type = "text/css">
+	/*
+	Css 적용방법
+	1. 선택자 (selector) > script
+	2. Css 적용은 기존에 존재하는 태그를 기준으로 적용
+	ex) p, h3,div , hr 등
+	
+	*/
+	
+	
+	</style>
+</head>
+<body>
+
+</body>
+</html>

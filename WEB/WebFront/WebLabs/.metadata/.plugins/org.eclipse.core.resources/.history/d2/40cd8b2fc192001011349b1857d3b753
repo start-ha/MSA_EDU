@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+개발자가 알아야 할 CSS 지식
+1.Inline - by using the style attribute inside HTML elements
+2.Internal
+3.External
+
+inline > <p style = ""
+Internal > <style type 현재 페이지에서만 적용>
+External > 외부에 별도의 css 만듬 > common.css, hader.css
+
+
+ -->
+	<h3>inline방식 (태그 안쪽)</h3>
+	<p style = "background-color: red;">문단태그에 CSS 적용</p>
+
+</body>
+</html>

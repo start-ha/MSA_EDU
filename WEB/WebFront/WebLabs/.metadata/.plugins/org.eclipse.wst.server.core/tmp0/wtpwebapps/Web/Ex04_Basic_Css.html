@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		/*javascript*/	
+	</script>
+	<style type = "text/css">
+	/*
+	Css 적용방법
+	1. 선택자 (selector) > script
+	2. Css 적용은 기존에 존재하는 태그를 기준으로 적용
+	ex) p, h3,div , hr 등
+	
+		가상선택자 : 의미만 존재>>  :link, :visited, :hover, :active 또는  ::link 
+	*/
+	
+	a:link {color:red;}
+	a:visited {color:aqua;}
+	a:hover {color:green;}
+	a:active{color :orange;}
+	 
+	h1,h2,h3{color:deeppink;}
+	/*다중선택자*/
+	
+	h4{color:blueviolet;}
+	/*단일 선택자*/
+	
+	/*
+	Todau point 사용자 정의
+	조건:
+	1) . >>class 속성 사용
+	2) # >> id 속성 사용
+	
+	css, javascript, jquery에 동등하게 적용되는 규칙
+	*/
+
+	.jang {color:blue;} /*class = "jang" 현재 페이지에서 여러번 사용 */
+	#kglim{color:gold;} /* id = "kglim" 현재 페이지에서 한 번만 사용(식별)*/
+	
+	
+	</style>
+</head>
+<body>
+	<a href = "http://president.go.kr">방문하기</a>
+	<h1>h1</h1>
+	<h2>h2</h2>
+	<h3>h3</h3>
+	<hr>
+	<p id = "kglim">id라는 속성을 이용해서 css적용</p>
+	<p class = "jang">class라는 속성을 이용해서 css적용</p>
+	<p class = "jang">class라는 속성을 이용해서 css적용</p>
+	<p class = "jang">class라는 속성을 이용해서 css적용</p>
+	<p id = "kglim">id라는 속성을 이용해서 css적용</p>
+
+
+
+</body>
+</html>

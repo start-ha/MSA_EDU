@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	table{width: 100%; border-collapse: collapse;}
+	th,td{
+		border: 1px solid red;
+		text-align: left;
+		}
+</style>
+</head>
+<body>
+<h2>HTML 테이블</h2>
+
+<table style="width:100%">
+  <tr>
+    <th>Company</th>
+    <th>Contact</th>
+    <th>Country</th>
+  </tr>
+  <tr>
+    <td>Alfreds Futterkiste</td>
+    <td>Maria Anders</td>
+    <td>Germany</td>
+  </tr>
+  <tr>
+    <td>Centro comercial Moctezuma</td>
+    <td>Francisco Chang</td>
+    <td>Mexico</td>
+  </tr>
+</table>
+<hr>
+<table>
+	<tr><td>가</td><td>나</td><td>다</td></tr>
+	<tr><td>라</td><td>마</td><td>바</td></tr>
+	<tr><td>사</td><td>아</td><td>자</td></tr>
+</table>
+<hr>
+<table>
+	<tr><td colspan="2">가,나</td><td>다</td></tr> <!-- 컬럼 병합 colspan -->
+	<tr><td>라</td><td>마</td><td>바</td></tr>
+	<tr><td colspan="3">사,아,자</td></tr>
+</table>
+<hr>
+<table>
+	<tr><td rowspan="2">가,라</td><td colspan = "2">나,다</td></tr>
+	<tr><td>마</td><td>바</td></tr>
+	<tr><td>사</td><td>아</td><td>자</td></tr>
+</table>
+<hr>
+<table>
+	<tr><td rowspan="2" colspan="2">가,라</td><td colspan = "2">나,다</td></tr>
+</table>
+
+<hr>
+<table>
+	<tr><td rowspan="2" colspan="2">가</td><td>나</td><td>다</td></tr>
+	<tr><td>마</td><td>바</td></tr>
+</table>
+
+
+</body>
+</html>

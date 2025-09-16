@@ -1,0 +1,8 @@
+INDEX VERSION 1.4+C:\MSA_EDU\WEB\WebFront\WebLabs\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+364084616.index
+3558212379.index
+2032110587.index
+2873831592.index
+1918552229.index
+2236179158.index
+4159190314.index
