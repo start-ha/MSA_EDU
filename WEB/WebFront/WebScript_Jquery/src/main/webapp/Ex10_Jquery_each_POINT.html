@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+
+	    
+		/*
+		[javascript]
+		1. for(let index in Arrays){Array[index]}
+		2. Object(JSON) : for(let key in jsonObj){jsonobj[key]}
+		3. array.forEach(function(value,index,array){}) 추가),  array.map()..
+		
+		[jquery] $().each() 반복문
+		1. $(selector).each(function(){});  파라미터 없는 거 this활용>> ex) $('p').each(function(){ this활용 });
+		2. $(selector).each(function(index){ this활용 });
+		3. $(selector).each(function(index , element){ element });  ^^  초급자
+		
+		[jquery] $.each()
+		1. $.each(Array or Object , function(){ this 활용 });
+		2. $.each(Array or Object , function(index){ this 활용 });
+		3. $.each(Array or Object , function(index ,element){ element });  초급자
+		
+		parameter JSON 객체라면
+		let obj = {name:"홍길동" , age:100};
+		$(obj).each(function(key, value){ value });
+		$.each(obj , function(key , value){ value})
+   */
+
+   		$(function(){//each : 모든 요소 가져오기
+   			$('p').each(function(){ //this 활용해 자원사용(파라미터 x 실제는 파라미터 있는 거 권장)
+   				//익명(콜백)
+   				//this
+   				console.log("this :" + $(this).text()) //jquery function$ 안에 넣으면 jquery기능을 사용가능하다
+   			});
+   		
+   			$('p').each(function(index){ //this 활용해 자원사용(파라미터 x 실제는 파라미터 있는 거 권장)
+   				//익명(콜백)
+   				//this
+   				//index는 이 함수안의 배열의 index값
+   				console.log(this);
+   				console.log("index : " + index);
+   				
+   			//인덱스 자동생성 p태그에 id, style 지정
+
+   				//$(this).attr("id", "param"+index);
+   				//$(this).attr("style", "color:red"); 
+   				
+   				//jquery 함수는 parameter json 객체
+   				$(this).after( //this p태그
+   						
+					{
+						"id":"param-"+index,
+						"style":"color:red"
+   					}
+   				);
+   		});
+   			
+   			//초급자 (쒸운 방법)
+				$('p').each(function(index,element){
+					console.log("index :" + index);
+					console.log(element);
+					console.log($(element).text());
+				});
+				
+				$('#btn').click(function(){
+					alert($('#param-1').text());
+				});
+				
+				
+				//배열
+				/*
+				let arr = [];
+				arr.push("A"); //데이터 추가
+				
+				let obj = {}; //객체 생성
+				let objarr =[{},{},{}]
+				
+				*/
+
+				const array = [
+					{"name":"naver" , "link":"http://www.naver.com"},
+					{"name":"daum"  , "link":"http://www.daum.net"},
+					{"name":"kosa"  , "link":"http://www.kosa.or.kr"}
+				]
+				
+				$.each(array,function(index, obj){
+					console.log(obj.name + "," + obj["link"]); //객체에 배열로 키값 
+					
+				});
+
+				//naver,http://www.naver.com
+				
+	
+				const boardObj = {
+				values: [
+					      {no:1 , title:"hello world"},
+					      {no:2 , title:"korea"},
+					      {no:3 , title:"kosa world"}
+				        ],
+				search:"검색"        
+							}
+				
+				$.each(boardObj.values,function(index,obj){
+					console.log(index + "," + obj.no + "," +obj.title);
+					
+				});
+				
+				$.each(boardObj,function(key,values){
+					console.log(key + " --- " + values);
+					// values --- [object Object],[object Object],[object Object]
+					//search --- 검색
+					
+					if(typeof(values) == "object"){
+						//[{},{},{}]
+						$.each(values,function(index,obj){
+							//키값 줌. 키에 대한 주소값 나오게
+							console.log(index+ "/" + obj["no"] + "/" + obj["title"]);
+							
+						});
+						
+					}else{
+						console.log(key+ "/" + values);
+					}
+					
+					/*
+					1/2/korea
+					Ex10_Jquery_each_POINT.html:121 2/3/kosa world
+					Ex10_Jquery_each_POINT.html:113 search --- 검색
+					Ex10_Jquery_each_POINT.html:126 search/검색
+					*/
+				});
+				
+			});
+
+</script>
+</head>
+<body>
+	<p>java</p>
+	<p>jsp</p>
+	<p>oracle</p>
+	<p>jquery</p>
+	<input type ="button" value="클릭" id="btn">
+</body>
+</html>

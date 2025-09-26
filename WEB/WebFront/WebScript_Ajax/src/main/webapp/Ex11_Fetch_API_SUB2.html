@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>약국 목록</title>
+  
+  
+</head>
+<body>
+
+  <input type="button" value="조회하기" id="btn">
+  <div id="TbPharmacyOperateInfo"></div>
+
+  <script>
+  fetch("http://openapi.seoul.go.kr:8088/6655616b57686167393172614f6672/xml/TbPharmacyOperateInfo/1/5/")
+  .then((response) => response.json())
+  .then((data) => console.log(data));
+  
+  
+  
+ 
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("btn").addEventListener("click", function () {
+        
+        const publicAPI = "http://openapi.seoul.go.kr:8088/6655616b57686167393172614f6672/xml/TbPharmacyOperateInfo/1/5/";
+       
+        const params = `?tags=${encodeURIComponent(query)}&tagmode=any&format=json`;
+
+        const url = publicAPI + params;
+
+        const script = document.createElement("script");
+        script.src = url + "&jsoncallback=processData";
+        document.body.appendChild(script); // JSONP 방식 (CORS 우회하기 : callback 함수)
+        
+      });
+    });
+
+    function processData(data) {
+    		  
+    		  data.items.forEach(item => {
+	    			  
+    		      });
+    }
+    
+    
+
+    
+    
+    
+    
+  </script>
+
+</body>
+</html>

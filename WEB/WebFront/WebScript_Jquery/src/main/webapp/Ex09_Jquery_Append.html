@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+
+	 /*
+		    append() - Inserts content at the end of the selected elements
+			prepend() - Inserts content at the beginning of the selected elements
+			after() - Inserts content after the selected elements
+			before() - Inserts content before the selected elements
+		    
+		    <p>A</p> >> B append() >>  <p>AB</p>  >> C append() >> <p>ABC</p> 
+			
+		    <p>A</p> >> B prepend() >> <p>BA</p>  >> C prepend() >> <p>CBA</p>
+			
+		    <p>A</p> >> B after()   >>    <p>A</p>B
+		    <p>A</p> >> B before()   >>  B<p>A</p>
+		    
+		    태그 안쪽 : prepend() , append()
+		    태그 바깥쪽 : before() , after()
+		    
+		    
+		    
+		   remove() - Removes the selected element (and its child elements) : 선택된 자기 자신 
+	       empty() - Removes the child elements from the selected element :자식 제거
+		    */
+
+		$(function(){
+			$('#btn1').click(function(){
+				$('p').append("<b>append text</b>");
+			});
+			
+			$('#btn2').click(function(){
+				$('ol').prepend("<li>prepend text</li>");
+			});
+		});
+	
+	</script>
+</head>
+<body>
+	<p>this is p</p>
+	<p>this is another p</p>
+	
+	<ol>
+		<li>List item 1</li>
+		<li>List item 2</li>
+		<li>List item 3</li>
+	</ol>
+	
+	<button id="btn1">Append Text</button>
+	<button id="btn2">prepend list items</button>
+</body>
+</html>

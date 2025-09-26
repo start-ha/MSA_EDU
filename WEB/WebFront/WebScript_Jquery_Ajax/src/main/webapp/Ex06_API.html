@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>I_Seoul_You</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/sandstone/bootstrap.min.css">
+	<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script type="text/javascript">
+	    
+		$(document).ready(function(){
+			$('#btn').click(function(){		// 버튼 클릭하면 실행
+				$("#tableBody").empty();	// 이미 만들어진 테이블이 있다면 없애기
+				
+				let API = "http://openapi.seoul.go.kr:8088/4f6b4c50646c697a3832654e5a6b78/json/TbVwEntertainment/1";
+				let numVal = $('input[name="num"]:checked').val();
+				let param = (API +"/"+ numVal + "/" + ($('#lang').val()));			
+				console.log(param);
+				
+				//http://openapi.seoul.go.kr:8088/4f6b4c50646c697a3832654e5a6b78/json/TbVwEntertainment/1/10/ko
+				//문자열로 결합해야됨
+				
+				//주의 ...
+				//json/TbVwEntertainment/1/10/ko  문자열 조합 
+				//?name=aaa&age=100  >> {name:"aaa",age:100}  >> getJSON(url , {name:"aaa",age:100} )
+				
+		        let seoullist = []; // 값 리스트		        
+	            
+				$.getJSON(param, function(jsondata, textStatus, xhr){	// json에서 배열로 값 샥샥
+					$.each(jsondata.TbVwEntertainment.row, function (index, obj) {
+	                    seoullist.push(obj);
+	                });
+					arrList();
+				});		
+	
+				function arrList() {	// 테이블에 넣기
+	                $.each(seoullist, function (index, obj) {
+	                    $('#tableBody').append('<tr><td>' + obj.POST_SJ + '</td><td>' 
+						+ obj.NEW_ADDRESS + '</td><td>' + obj.CMMN_TELNO + '</td><td>' 
+						+ obj.CMMN_USE_TIME + '</td><td>' + obj.SUBWAY_INFO + '</td></tr>');
+					}
+				)};
+			});
+		});
+	</script>
+	
+	<style>
+	#title {
+		text-align: center;
+	}
+	
+	body {
+		margin: 50px;
+		padding: 50px;
+		border: solid 5px;
+		border-color: gray;
+	}
+	</style>
+</head>
+
+<body>
+	<ol class="breadcrumb">
+		<h1 style="margin: auto; color: rgb(68, 68, 68);">서울특별시 관광문화 정보</h1>
+	</ol>
+	<label for="inputFind">언어 : </label>
+	<select name="lang" id="lang">
+		<option value="ko" selected="selected">한국어</option>
+		<option value="en">영어</option>
+		<option value="ja">일본어</option>
+	</select> &nbsp&nbsp&nbsp
+	<input type="radio" name="num" id="num" value=10 checked> 10건 보기&nbsp&nbsp&nbsp&nbsp
+	<input type="radio" name="num" id="num" value=20> 20건 보기&nbsp&nbsp&nbsp&nbsp
+	<input type="radio" name="num" id="num" value=30> 30건 보기&nbsp&nbsp&nbsp&nbsp
+	<input type="button" id="btn" value="검색">
+
+	<table class="table table-hover">
+		<thead>
+			<tr>
+				<th scope="col">상호명</th> <!--POST_SJ-->
+				<th scope="col">주소</th> <!--NEW_ADDRESS-->
+				<th scope="col">전화번호</th> <!--CMMN_TELNO-->
+				<th scope="col">운영시간</th> <!--CMMN_USE_TIME-->
+				<th scope="col">교통정보</th> <!--SUBWAY_INFO-->
+			</tr>
+		</thead>
+		<tbody id="tableBody">
+		</tbody>
+	</table>
+</body>
+</html>

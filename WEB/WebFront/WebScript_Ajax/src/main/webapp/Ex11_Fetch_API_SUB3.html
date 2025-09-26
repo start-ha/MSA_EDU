@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>서울시 약국 조회</title>
+  <style>
+    .district-buttons, .sub-list {
+      text-align: center;
+      margin: 20px;
+      flex-wrap: wrap;
+    }
+
+    .district-buttons button {
+      margin: 5px;
+      padding: 10px 15px;
+      border: none;
+      background-color: #f0f0f0;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    .district-buttons button.active {
+      background-color: #007bff;
+      color: white;
+    }
+
+    .sub-list ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .sub-list li {
+      display: inline-block;
+      margin: 5px 10px;
+      padding: 8px 12px;
+      background-color: #ddd;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .sub-list li:hover {
+      background-color: #bbb;
+    }
+
+    .filter-container {
+      text-align: center;
+      margin: 10px 0 20px;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin: 0 auto 30px auto;
+    }
+
+    th, td {
+      border: 1px solid #444;
+      padding: 8px 12px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #eee;
+    }
+
+    h3 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <h3>서울시 약국 조회</h3>
+
+  <div class="district-buttons" id="districtContainer"></div>
+
+  <div class="sub-list" id="subListContainer"></div>
+
+  <div class="filter-container">
+    <label><input type="checkbox" id="weekendOnly"> 주말에만 운영하는 약국 보기</label>
+  </div>
+
+  <div id="TbPharmacyOperateInfo"></div>
+
+  <script>
+    const districts = [
+      "강남구", "강동구", "강북구", "강서구", "관악구",
+      "광진구", "구로구", "금천구", "노원구", "도봉구",
+      "동대문구", "동작구", "마포구", "서대문구", "서초구",
+      "성동구", "성북구", "송파구", "양천구", "영등포구",
+      "용산구", "은평구", "종로구", "중구", "중랑구"
+    ];
+
+    const apiKey = "6655616b57686167393172614f6672"; // 본인 인증키로 바꾸세요
+
+    const districtContainer = document.getElementById("districtContainer");
+    const subListContainer = document.getElementById("subListContainer");
+    const resultContainer = document.getElementById("TbPharmacyOperateInfo");
+    const weekendCheckbox = document.getElementById("weekendOnly");
+
+    let selectedDistrict = "";
+
+    // 1단계: 지역구 버튼 생성
+    districts.forEach(gu => {
+      const btn = document.createElement("button");
+      btn.textContent = gu;
+      btn.addEventListener("click", () => {
+        selectedDistrict = gu;
+        document.querySelectorAll(".district-buttons button").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        renderSubList(gu);
+        resultContainer.innerHTML = ""; // 약국 리스트 초기화
+      });
+      districtContainer.appendChild(btn);
+    });
+
+    // 2단계: 서브 리스트(선택 클릭용 리스트) 표시
+    function renderSubList(guName) {
+      subListContainer.innerHTML = `<ul><li data-gu="${guName}">${guName} 약국 목록 보기</li></ul>`;
+
+      const li = subListContainer.querySelector("li");
+      li.addEventListener("click", () => {
+        fetchPharmacies(guName, weekendCheckbox.checked);
+      });
+    }
+
+    // 3단계: 주말 체크박스 변경 시 재조회
+    weekendCheckbox.addEventListener("change", () => {
+      if (selectedDistrict) {
+        fetchPharmacies(selectedDistrict, weekendCheckbox.checked);
+      }
+    });
+
+    // 약국 API 호출 및 필터 적용
+    function fetchPharmacies(guName, weekendOnly) {
+      const url = `http://openapi.seoul.go.kr:8088/${apiKey}/xml/TbPharmacyOperateInfo/1/100/?DUTYADDR=${encodeURIComponent(guName)}`;
+
+      fetch(url)
+        .then(res => res.text())
+        .then(str => (new window.DOMParser()).parseFromString(str, "text/xml"))
+        .then(xml => {
+          const rows = Array.from(xml.getElementsByTagName("row"));
+
+          let filteredRows = rows;
+
+          if (weekendOnly) {
+            filteredRows = rows.filter(row => {
+              const mon = row.getElementsByTagName("DUTYTIME1C")[0]?.textContent || "";
+              const tue = row.getElementsByTagName("DUTYTIME2C")[0]?.textContent || "";
+              const wed = row.getElementsByTagName("DUTYTIME3C")[0]?.textContent || "";
+              const thu = row.getElementsByTagName("DUTYTIME4C")[0]?.textContent || "";
+              const fri = row.getElementsByTagName("DUTYTIME5C")[0]?.textContent || "";
+
+              const sat = row.getElementsByTagName("DUTYTIME6C")[0]?.textContent || "";
+              const sun = row.getElementsByTagName("DUTYTIME7C")[0]?.textContent || "";
+              const hol = row.getElementsByTagName("DUTYTIME8C")[0]?.textContent || "";
+
+              const 평일운영 = mon || tue || wed || thu || fri;
+              const 주말운영 = sat || sun || hol;
+
+              return !평일운영 && 주말운영;
+            });
+          }
+
+          if (filteredRows.length === 0) {
+            resultContainer.innerHTML = `<p style="text-align:center;">약국 정보가 없습니다.</p>`;
+            return;
+          }
+
+          let html = "<table><tr><th>약국명</th><th>주소</th><th>전화번호</th></tr>";
+
+          filteredRows.forEach(row => {
+            const name = row.getElementsByTagName("DUTYNAME")[0]?.textContent || "-";
+            const addr = row.getElementsByTagName("DUTYADDR")[0]?.textContent || "-";
+            const tel = row.getElementsByTagName("DUTYTEL1")[0]?.textContent || "-";
+
+            html += `<tr><td>${name}</td><td>${addr}</td><td>${tel}</td></tr>`;
+          });
+
+          html += "</table>";
+          resultContainer.innerHTML = html;
+        })
+        .catch(err => {
+          console.error("에러 발생:", err);
+          resultContainer.innerHTML = "<p style='text-align:center;'>데이터를 불러오는 데 실패했습니다.</p>";
+        });
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+	/*
+	콜백 : 프로그램 논리에 의해서 호출되는 함수 (3초 뒤에, 어떤 함수 호출 뒤에)
+	
+	콜백은 다른 함수에 [인수 parameter]로 전달되는 함수입니다. [함수는 일급객체 : 함수는 리턴할 수 있다]
+	이 기술을 사용하면 함수가 다른 함수를 호출할 수 있습니다.
+	>>다른 함수가 완료된 후 나중에 콜백 함수를 실행할 수 있습니다.
+	
+	A callback is a function passed as an argument to another function
+	This technique allows a function to call another function
+	A callback function can run after another function has finished
+	
+	callback : 개발자의 논리에 의해서 호출 되는 함수 ... 비동기 처리 아니고요 ....
+	비동기 사용되요 ^^ (콜백기 비동기 함수가 아니고 비동기 기술에 사용되요 ...)
+	*/
+	</script>
+</head>
+<body>
+	<p id="demo"></p>
+	
+	<script type="text/javascript">
+		function myDisplayer(something){ //js 함수는 객체 : 주소를 던짐
+			document.getElementById("demo").innerHTML = something;
+		}
+		
+		function myCalculator(num1, num2, myCallback){ //myCallback에 myDisplayer 함수주소를 던짐
+			const sum = num1 + num2;
+			myCallback(sum); //callback 함수 ... // 결과를 담는 함수
+		}
+		
+		myCalculator(5,10,myDisplayer); //parameter 로 함수를 전달 ...
+		//myCalculator(5,10,myDisplayer()); 괄호안됨. Wrong 안되요  ( x )
+	</script>
+</body>
+</html>

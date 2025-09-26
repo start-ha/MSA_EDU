@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		//window.onload = function(){//body 안에 있는 요소 가지고 놀기}
+		
+		/*위에랑 같음 window.onload*/
+		$(document).ready(function(){
+			//body 안에 있는 요소 가지고 놀기 외우기 (css, jquery, html 다쓰임)
+			$('#btn').click(function(){
+				$(this).hide(); 
+				
+				//.hide() display: none 으로 바꿔라....
+				//jquery에서는 화살표 쓰지말기(문제생김)
+				
+				
+			});
+		});
+	
+	
+	</script>
+
+
+</head>
+<body>
+	<input type = "button" id="btn" value="버튼">
+</body>
+</html>

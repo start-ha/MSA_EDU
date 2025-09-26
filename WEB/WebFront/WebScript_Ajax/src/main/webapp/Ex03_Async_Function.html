@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		/*
+			자바스크립트의 함수의 동기실행 비동기실행 이해
+		*/
+		
+		// 동기처리 (순서를 보장)
+		console.log(1);
+		console.log(2);
+		console.log(3);
+		console.log(4);
+	
+		// 순서를 보장하는 것이 좋을까 (고민)
+		// 햄버거 매장 (콜라 한잔 ... 앞 ...세트메뉴 ...)
+		// 비동기 처리 (먼저 처리되는 건 먼저 하고// ... 효율성 )
+		
+		// 비동기 처리 (순서를 보장하지 않아요)
+		console.log(1);
+		console.log(2);
+		setTimeout(() => {  //비동기 함수  //WEB API 함수 (별도의 작업 공간...)
+			console.log(3);
+		}, 3000); //3초뒤에 찍힘
+		console.log(4);
+		
+		// 1,2,4,3
+		
+		// 비동기 처리 ( 여러개의 비동기 [순서를 보장 하는 기술 추가]...)
+		// 함수안에 함수 그 함수안에 함수 .... () callback hell... 계속반복
+		// 로그인 ID > 주문 ... > 계산서
+		
+		/*
+		Ajax
+		1. XMLHttpRequest 객체 직접사용 ( 순수한 Javascript를 활용 ) 
+		1.1 https://www.w3schools.com/js/js_ajax_intro.asp 내용을 기반으로 ....
+		
+		2. fetch API ( XMLHttpRequest 객체 없이도 비동기 처리 )
+		
+		3. Jquery 에서는 내부적으로 XMLHttpRequest객체를 활용한 다양한 함수 제공
+		3.1 $.post(URL,data,callback)   
+		3.2 많이 자주쓰는 함수를 미리 만들어서 갖다씀
+		
+		*/
+	</script>
+
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		//https://www.w3schools.com/jquery/jquery_selectors.asp
+	
+		$('body > *').css('color', "gold"); //자식 선택자
+		$('div > *' ).css('color', "red");
+		$('input[type=text]').css('color', "green");
+	
+	
+	/*
+		DOM script : p, div > innrerHTML, innerText (value 속성이 없는 것)
+		input 태그들은 value 속성을 가지고 있다
+		ex) document.getElementById("name").value
+		
+		//value가 없는 애들? innerHTML, innerText
+		
+		//Jquery 3총사
+		val(), text(), html() >> 값을 read, write >> getter, setter
+		
+		val('홍길동') > write(setter) 값 쓰기
+		val() > read(getter) 값 읽기
+
+		$('#userid').val() > read
+		$('#userid').val("world") >write
+				
+	*/
+	
+		$('input[type=text]').val('9999'); //text인 모든 요소
+
+		//javascript 하고 jquery 혼합해서 사용 가능
+		setTimeout(()=> {
+			const value = $('select > option:selected').val();
+			alert("select tag value : " + value);
+		},3000); //3초 뒤에 콜백함수 실행
+	});
+	
+	</script>
+</head>
+<body>
+<div>
+		<ul>
+			<li>사과</li>
+			<li>배</li>
+			<li>수박</li>
+		</ul>
+	</div>
+	<div>
+		<ul>
+			<li>사과2</li>
+			<li>배2</li>
+			<li>수박2</li>
+		</ul>
+	</div>
+	<input type="text" value="AAA">
+	<input type="text" value="BBB">
+	<input type="text" value="CCC">
+	<input type="password">
+	<input type="radio">
+	<input type="file">
+	<hr>
+	<table>
+		<tr>
+			<td>이름</td>
+			<td>나이</td>
+			<td>취미</td>
+		</tr>
+		<tr>
+			<td>홍길동</td>
+			<td>50</td>
+			<td>훔치기</td>
+		</tr>
+		<tr>
+			<td>이순신</td>
+			<td>10</td>
+			<td>싸움</td>
+		</tr>
+		<tr>
+			<td>학생</td>
+			<td>30</td>
+			<td>잠자기</td>
+		</tr>
+	</table>
+	<hr>
+	<select>
+		<option>농구</option>
+		<option>축구</option>
+		<option>야구</option>
+		<option>배구</option>
+	</select>	
+</body>
+</html>

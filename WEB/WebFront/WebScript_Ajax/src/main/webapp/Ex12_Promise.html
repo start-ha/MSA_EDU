@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+		//비동기 함수 편한 방법 (setTimeout())
+		
+		
+		//TEST 1
+		/*
+		function delay(sec , callback){  //callback 비동기 아니고 (비동기에 활용 ....)
+			setTimeout(() => {
+				callback(new Date()); 
+			}, sec * 1000);
+		}
+		
+		console.log("delay start" , new Date());
+		
+		delay(2,(result)=>{console.log(result)});
+		
+		console.log("delay end");
+		
+		//결과 : 순서를 보장하지 않아요 (비동기 처리)
+	    
+		//3개의 함수를 만들어서 일정한 1초 , 2초 간결으로 출력되기를 원해요
+		
+		*/
+		
+		
+		//TEST 2
+		/*
+		function delay(sec , callback){
+			setTimeout(() => {
+				callback(new Date());
+			}, sec * 1000);
+		}
+		
+		delay(2,(result)=>{console.log(1,result)}); 
+		delay(2,(result)=>{console.log(2,result)});
+		delay(2,(result)=>{console.log(3,result)});
+		
+		
+		//준비 땅 3개 함수가 거의 동시 2초 뒤 실행
+		
+		
+		*/
+		/*
+			3개의 비동기 함수가 순차적으로 실행 되기를 원해요
+			함수(함수(함수))
+		
+		*/
+		
+		
+		// TEST 3
+		/*
+		function delay(sec , callback){
+			setTimeout(() => {
+				callback(new Date());
+			}, sec * 1000);
+		}
+		
+		//콜백 지옥 (보장 코드 양산 ... 유지보수) 
+		//요구 ...  promise (객체) 만들었어요 
+		delay(2,(result)=> {
+			console.log(1,result); //2초
+			
+				delay(2,(result) =>{ //4초
+				 	console.log(2,result);
+				 
+				 		delay(2,(result)=>{ //6초
+					 		console.log(3,result);
+				 });
+			 });
+		});
+		
+		*/
+		
+		/*
+		 로그인 : ID
+		 
+		 	장바구니에 물건 담기 (ID , product)
+		      결제 처리
+		      
+		 함수처리 .....     
+		      로그인(){
+			     장바구니(){
+			    	 결제처리(){
+			    		 
+			    	 }			    	 
+			     }
+		     }
+		
+		*/
+		
+		/*
+			//내가 설정한 결과보장할떄......
+			let myPromise = new Promise(function(myResolve, myReject) {
+			// "Producing Code" (May take some time)
+
+			  myResolve(); // when successful
+			  myReject();  // when error
+			});
+
+			// "Consuming Code" (Must wait for a fulfilled Promise)
+			myPromise.then(
+ 							 function(value) {  },
+  							 function(error) {  }
+							)
+		
+		*/
+		
+		/*
+		promise 기본 코드 작성하기_1
+		
+		function delayPromise(sec){
+			return new Promise((resolve,resject)=>{
+				setTimeout(() => {
+					resolve(new Date()); //성공이라면 
+				}, sec * 1000);
+			})	
+		}
+			
+		delayPromise(1).then((result)=> {console.log(1,result)});
+		*/
+		
+		/*
+		promise 기본 코드 작성하기_2 : callback 지옥과 다르지 않다 ... 해결해야지
+		
+		//promise 사용하는데 마치 callback 에 callback 을 하는 것처럼 사용한다면 
+		function delayPromise(sec){
+			return new Promise((resolve,resject)=>{
+				setTimeout(() => {
+					resolve(new Date()); //성공이라면 
+				}, sec * 1000);
+			})	
+		}
+		//결국에는 함수안에 함수 > 함수 안에 함수 다를 것이 없다 (유지보수 어려움 ... 안되요(x))	
+		delayPromise(1).then((result)=> {
+			console.log(1,result);
+			delayPromise(1).then((result)=>{
+				console.log(2,result);
+			});			
+		});
+		*/
+		
+		//Promise 제대로 사용하기 ...........................................
+		
+		/*
+		function delayPromise(sec){
+			return new Promise((resolve,resject)=>{
+				setTimeout(() => {
+					resolve(new Date()); //성공이라면 
+				}, sec * 1000);
+			})	
+		}
+		*/
+		
+		//GOOD
+		/*
+		delayPromise(1).then((result)=> {
+			console.log(1,result);
+			return delayPromise(1); //결국 Promise 객체 리턴 
+		}).then((result)=>{
+			console.log(2,result);
+			return delayPromise(1);
+		}).then((result)=>{
+			console.log(3,result);
+		});
+		*/
+		/*
+		재미삼아서 ....
+		여러개의 비동기를 순차적으로 실행하고 싶으면...
+		delayPromise(1).then((result)=> {
+			console.log(1,result);
+			return delayPromise(1); //결국 Promise 객체 리턴 
+		}).then((result)=>{
+			console.log(2,result);
+			return delayPromise(1);
+		}).then((result)=>{
+			console.log(3,result);
+			return "kosa^^^";  //promise 객체를 리턴 하지 않으면 지연연이 출력가능
+		}).then((result)=>{
+			console.log(result);
+		});
+		*/
+		
+		//https://www.w3schools.com/js/tryit.asp?filename=tryjs_promise1
+		
+		
+		function myDisplayer(some) {
+			  document.getElementById("demo").innerHTML = some;
+			}
+
+			let myPromise = new Promise(function(myResolve, myReject) {
+			  let req = new XMLHttpRequest();
+			  req.open('GET', "mycar.html");
+			  req.onload = function() {
+			    if (req.status == 200) {
+			      myResolve(req.response);
+			    } else {
+			      myReject("File not Found");
+			    }
+			  };
+			  req.send();
+			});
+
+			myPromise.then(
+			  function(value) {myDisplayer(value);},
+			  function(error) {myDisplayer(error);}
+			);
+		
+	</script>
+</head>
+<body>
+
+</body>
+</html>

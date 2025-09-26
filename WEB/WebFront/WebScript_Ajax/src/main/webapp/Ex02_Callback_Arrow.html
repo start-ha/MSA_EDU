@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<p id="demo"></p>
+	<script type="text/javascript">
+		
+	const myNumbers = [4 , 1 , -20 , -7 , 5 , 9 , -6];
+	
+	const posNumbers = removeNeg(myNumbers,(x) => x >= 0); //콜백함수로 화살표 함수를 사용 ^^
+	
+	document.getElementById("demo").innerHTML = posNumbers;	
+	
+	
+	function removeNeg(numbers,callback){ 
+		const myArray = [];
+		for(const x of numbers){
+			if(callback(x)){  // 0 과 같거나 큰 배열값 .... true
+				myArray.push(x);
+			}
+		}
+		return myArray;
+	}		
+	/*
+	**콜백이 빛을 발하는 곳은 하나의 함수가 다른 함수를 기다려야 하는 비동기 함수 입니다**
+	
+	*/
+	</script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>Flickr 이미지 검색</title>
+  <style>
+    img {
+      margin: 10px;
+      width: 200px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="text" id="search" placeholder="예: 싸이, 라쿤 등">
+  <input type="button" value="검색하기" id="btn">
+  <div id="images"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("btn").addEventListener("click", function () {
+        
+    	const query = document.getElementById("search").value.trim();
+        
+        const flickerAPI = "https://api.flickr.com/services/feeds/photos_public.gne";
+       
+        const params = `?tags=${encodeURIComponent(query)}&tagmode=any&format=json`;
+
+        const url = flickerAPI + params;
+
+        const script = document.createElement("script");
+        script.src = url + "&jsoncallback=processData";
+        document.body.appendChild(script); // JSONP 방식 (CORS 우회하기 : callback 함수)
+        
+      });
+    });
+
+    function processData(data) {
+      const container = document.getElementById("images");
+      container.innerHTML = "";
+
+      data.items.forEach(item => {
+        const img = document.createElement("img");
+        img.src = item.media.m;
+        container.appendChild(img);
+      });
+    }
+  </script>
+
+</body>
+</html>

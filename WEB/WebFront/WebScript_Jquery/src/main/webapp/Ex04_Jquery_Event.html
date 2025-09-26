@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script type="text/javascript">
+		 $(document).ready(function(){
+			/*
+			$(document).ready(function(){
+			})
+			*/
+			
+			$(function(){ //$(document).ready(function(){
+				$('#btncopy').click(function(){
+					$('#txtcopyuserid').val($('#txtuserid').val());
+					});			//읽어와서 하겠다...	
+		
+				$('#select_hobby').change(function(){
+						const text = $(':selected').text(); //함수. 직접적인 코드구현은 안함
+						console.log(text);
+				
+						const text2 = $('#select_hobby option:selected').text();
+						console.log(text2);
+						
+						const value = $('#select_hobby').val();
+						console.log(value);
+			});
+
+					$('#txtpwd2').keyup(function(){
+						if($('#txtpwd').val() != $('#txtpwd2').val()){
+							$('#message').html('<h3>암호가 일치하지 않아요</h3>') //innerHtml과 비슷							
+							}else{
+								$('#message').html('<h3>암호가 일치합니다</h3>')								
+							}						
+					});
+			});
+		})
+		</script>
+</head>
+<body>
+	<p>Jquery hover(mouseover , mouseleave)</p>
+	
+	ID:<input type="text" id="txtuserid">
+	<hr>
+	<input type="button" id="btncopy" value="copy">
+	<hr>
+	Copy ID:<input type="text" id="txtcopyuserid">
+	
+	<hr>
+	<select id="select_hobby">
+		<option value="JAVA">java</option>
+		<option value="SCRIPT">script</option>
+		<option>jdbc</option>
+	</select>
+	<br>
+	<input type="text" id="txtselect">
+	<hr>
+	<table style="border: 1px solid red;">
+		<tr>
+			<td>암호</td>
+			<td>
+				<input type="text" id="txtpwd" size="20" maxlength="5">
+			</td>
+		</tr>
+		<tr>
+			<td>암호확인</td>
+			<td>
+				<input type="text" id="txtpwd2" size="20" maxlength="5">
+			</td>
+		</tr>
+	</table>
+	<div id="message" style="color: red"></div>
+
+</body>
+</html>

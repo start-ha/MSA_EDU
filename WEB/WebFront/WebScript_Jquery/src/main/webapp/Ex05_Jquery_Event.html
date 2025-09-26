@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+		<script type="text/javascript">
+		
+		$(function(){
+			//jquery 이벤트 동적 처리
+			//jquery가 가지고 있는 대부분의 함수는 parameter로 JSON 객체를 (옵션)받는다
+			
+			//2.x.x > bind() , unbind()
+			//3.x.x > on()   , off()
+			
+			//p태그에 function을 건다 (on == add)
+			//$('p').on(function(){})
+			
+			
+			//투표이벤트 
+			$('p').on(
+				{//자바스크립트 리터럴표기 : 객체표기법 json
+					//이름이 키가 됨
+					mouseenter: function(){$(this).css('background-color', 'red')},
+					mouseleave: function(){$(this).css('background-color', 'green')},
+					click: function(){$(this).css('background-color', 'blue')}
+				}		
+			
+			);
+			
+			$('button').click(function(){
+				$('p').off('click');
+				//on의 click을 off 할 수 있음...				
+			})
+			
+		});
+		
+		
+		
+		
+		
+		</script>
+</head>
+<body>
+	<p>함수를 사용해서 다중 이벤트 처리하기</p>
+	<hr>
+	<button>이벤트 제거</button>
+</body>
+</html>

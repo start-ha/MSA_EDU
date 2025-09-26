@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>약국 목록</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 90%;
+      margin: 20px auto;
+    }
+    th, td {
+      border: 1px solid #444;
+      padding: 8px 12px;
+      text-align: left;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+    h3 {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <input type="button" value="검색하기" id="btn">
+  <div id="TbPharmacyOperateInfo"></div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("btn").addEventListener("click", function () {
+        
+        const publicAPI = "http://openapi.seoul.go.kr:8088/6655616b57686167393172614f6672/xml/TbPharmacyOperateInfo/1/5/";
+       
+        const params = `?tags=${encodeURIComponent(query)}&tagmode=any&format=json`;
+
+        const url = publicAPI + params;
+
+        const script = document.createElement("script");
+        script.src = url + "&jsoncallback=processData";
+        document.body.appendChild(script); // JSONP 방식 (CORS 우회하기 : callback 함수)
+        
+      });
+    });
+
+    function processData(data) {
+    		  
+    		  data.items.forEach(item => {
+	    			  const openPharmacyList = data.DATA.filter(pharmacy => 
+	    	    	    pharmacy.dutytime6c != null && pharmacy.dutytime7c != null && pharmacy.dutytime8c != null
+	    	    	  );
+
+    	    		  const tbody = document.getElementById("TbPharmacyOperateInfo");
+    	    		  tbody.innerHTML = "";
+    			  
+    			  for (const pharmacy of openPharmacyList) {
+    	    		    const tr = document.createElement("tr");
+    	    		
+    	    		    const tdName = document.createElement("td");
+    	    		    tdName.textContent = pharmacy.dutyname;
+    	    		
+    	    		    const tdAddr = document.createElement("td");
+    	    		    tdAddr.textContent = pharmacy.dutyaddr;
+    	    		
+    	    		    const tdTel = document.createElement("td");
+    	    		    tdTel.textContent = pharmacy.dutytel1;
+    	    		
+    	    		    tr.appendChild(tdName);
+    	    		    tr.appendChild(tdAddr);
+    	    		    tr.appendChild(tdTel);
+    	    		
+    	    		    tbody.appendChild(tr);
+    	    		  }
+    		      });
+    }
+    
+  </script>
+
+</body>
+</html>

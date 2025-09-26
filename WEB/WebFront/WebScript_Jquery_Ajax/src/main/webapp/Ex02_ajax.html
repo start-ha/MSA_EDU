@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	/*
+	    	Low-Level Interface 비동기 함수 : jQuery.ajax   , $.ajax
+			
+	    	jQuery.ajax( url [, settings ] )
+			공식 : https://api.jquery.com/jQuery.ajax/
+	
+			url : 요청주소
+			[, settings ] > 여러가지 옵션 > {json객체 형태로 ....}
+	
+	
+			dataType (default: Intelligent Guess (xml, json, script, or html))
+
+	    */
+	
+	$(function(){
+			$('#message').click(function(){
+				//비동기 처리하기
+				$.ajax(
+					{
+						url:"Ex02_menu.html",
+						dataType:"html", //서버가 클라이언트에게 응답하는 데이터 형식을 정의할 수 있다
+						success:function(responseText){ //서버가 응답한 데이터
+							console.log(responseText);
+							$('#menudiv').html($(responseText).find('li'));
+						} //readystate:4, state:200 응답왔고, 응답 정산건이면 콜백함수 호출
+					}		
+				
+				
+				);
+				
+			});
+	});
+	
+	</script>
+</head>
+<body>
+	<div id ="menudiv">
+		<a href = "#" id="menu1"></a>
+	</div>
+	<span id ="#message" >클릭하세요</span>
+</body>
+</html>

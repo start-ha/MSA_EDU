@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	/*
+	jQuery.post( url [, data ] [, success ] [, dataType ] )
+	
+	>>xmlHttpRequest >> xhr.open("POST","") 동일
+
+	1.bad
+	  $.post("Ex03_Server.jsp?name=hong&pwd1004") //모든 파라미터 값은 json 객체로 쓰기
+	
+	2.
+	const name = $('#name').val();
+	const pwd  = $('#pwd').val();
+	const param = "name="+name+"&pwd="+pwd
+	$.post("Ex03_Server.jsp,param)
+	  
+	3. good  (parameter json 객체)
+	const data = {"name":$('#name').val() ,"pwd":$('#pwd').val()}
+	$.post("Ex03_Server.jsp,data)
+	$.post("Ex03_Server.jsp,{"name":$('#name').val() ,"pwd":$('#pwd').val()})
+	
+	//name 속성은 서버가, id는 css,js가 사용
+	
+	*/
+	$(function(){
+		$('#btn').click(function(){
+			//파라미터를 data에 json형식으로 한번에 받는게 편하다
+			const data = {"name":$('#name').val(), "pwd":$('#pwd').val()};
+			$.post("Ex03_server.jsp",data,function(responseText){
+				$('#message').html(responseText);
+			});
+		});
+	});
+	
+	
+	
+	</script>
+</head>
+<body>
+
+			이름:<input type="text" id="name"><br>
+			비번:<input type="text" id="pwd"><br>
+			<input type="button" id="btn" value="비동기 전송"><br>
+			<hr>
+			<div id="message"></div>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	
+	/*  
+	http://api.flickr.com/services/feeds/photos_public.gne?tags=raccoon&tagmode=any&format=json&jsoncallback=?
+	getJSON 데이터 비동기 처리하기 
+	
+
+	http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?
+		
+	JSON 객체 가공 (paramter)		
+	tags=raccoon&tagmode=any&format=json
+		
+	input type="text" >> 싸이	
+	const data= {tags:  , tagmode:any , format:json}
+	
+	데이터 받아서 처리 하는  ex) 라쿤 >> 이미지 경로 추출
+	이미지 태그를 동적으로 생성하고 그 src=이미지 경로 추출 를 넣어서 화면에 출력
+*/
+
+/*  
+	http://api.flickr.com/services/feeds/photos_public.gne?tags=raccoon&tagmode=any&format=json&jsoncallback=?
+	
+	getJSON 데이터 비동기 처리하기 
+	
+
+	http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?
+		
+	JSON 객체 가공 (paramter)		
+	tags=raccoon&tagmode=any&format=json
+		
+	input type="text" >> 싸이	
+	const data= {tags:  , tagmode:any , format:json}
+	
+	데이터 받아서 처리 하는  ex) 라쿤 >> 이미지 경로 추출
+	이미지 태그를 동적으로 생성하고 그 src=이미지 경로 추출 를 넣어서 화면에 출력
+*/
+
+
+/*  
+	http://api.flickr.com/services/feeds/photos_public.gne?tags=raccoon&tagmode=any&format=json&jsoncallback=?
+	
+	getJSON 데이터 비동기 처리하기 
+	
+
+	http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?
+		
+	JSON 객체 가공 (paramter)		
+	tags=raccoon&tagmode=any&format=json
+		
+	input type="text" >> 싸이	
+	const data= {tags:  , tagmode:any , format:json}
+	
+	데이터 받아서 처리 하는  ex) 라쿤 >> 이미지 경로 추출
+	이미지 태그를 동적으로 생성하고 그 src=이미지 경로 추출 를 넣어서 화면에 출력
+*/
+	
+	
+$(function(){
+ 	$('#btn').click(function(){
+ 		const flickrAPI = "http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?";
+ 		//tags=raccoon&tagmode=any&format=json
+ 		const data ={tags:$('#search').val() , tagmode:"any" ,format:"json"}
+ 		//console.log(data);
+ 		
+ 		$.getJSON(flickrAPI,data,function(data, textStatus , xhr){ //서버에서 응답이 왔다면
+ 			//console.log(data);
+ 			//console.log(textStatus); //'success' 
+ 			//console.log(xhr.readyState); //4 도착했고
+ 			
+ 			$('#images').empty(); //자식 요소 삭제 .remove() 나자신도 같이 비우는거
+	 		
+	 		$.each(data.items, function(index , obj){
+	 			//$('<img>') 태그 생성
+	 			//$('img') selector
+	 			console.log(obj);
+	 			$('<img>').attr("src",obj.media.m).appendTo("#images");
+	 			//img 태그를 만들어서 #images 찿아서 끝나는 태그 앞에 추가 
+	 		});
+ 		});
+
+ 	}); 
+});
+</script>
+</head>
+<body>
+<input type="text" id="search">
+<input type="button" value="검색하기" id="btn">
+<div id="images"></div>
+</body>
+</html>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	</script>
+</head>
+<body>
+
+</body>
+</html>

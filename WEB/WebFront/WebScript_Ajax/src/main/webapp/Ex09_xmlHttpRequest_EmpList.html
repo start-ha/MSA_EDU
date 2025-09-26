@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script type="text/javascript">
+	/*
+	1. XMLHttpRequest 객체 얻기
+		2. onreadystatechange 이벤트 핸들러 구현 (함수)
+		3. 요청 정보 ( open() )
+		4. 요청 보내기 (send() )
+		5. 응답 처리 (Text(JSON), xml )
+
+*/
+		let xhr = null;
+		function getInstance(){
+			  if(window.XMLHttpRequest){
+				  xhr = new XMLHttpRequest;
+			  }else if(window.ActiveXObject){ //IE
+				  console.log("IE");
+			  }else{
+				  throw new Error("Ajax 비동기 지원하지 않아요");
+			  }
+			return xhr;  
+		}
+
+		function handlerStateChange(){
+			  if(xhr.readyState == 4){ //서버에서 응답이 왔다면
+				  if(xhr.status >= 200 && xhr.status < 300){ //응답이 성공적이라면
+					  //서버가 클라이언트에게 전달한 (응답한) 데이터 형식
+					  //1. Text(html,txt,css,json)  2. xml
+					  //가공 ..... JSON 가공 , XML 가공    (연습 : 플리커 ... , 공공데이터 ...)
+					  
+				      //1. Text(text, html , script , css , json ) >> xmlHttpRequest >> responseText
+				      //2. xml                                     >> xmlHttpRequest >> responseXml
+					  //3. 가공하기 전에 서버에서 온 데이터 확인 (테이블 출력 , Text 출력  ...요구사항 ...)
+					  console.log(xhr.responseText);
+				    
+				      //server에서 UI 작업이 된  html 받아서 ...
+				      document.getElementById("txtdata").innerHTML = xhr.responseText;
+				      
+				  }else{
+					  console.log("비정상 응답 : " + xhr.status);
+				  }
+			  }
+		}
+
+		function sendData(){
+			xhr = getInstance();
+			xhr.onreadystatechange = handlerStateChange; //이벤트에 함수전달  (x)
+			let empno = document.getElementById("emp").value;
+			xhr.open("POST","Ex09_EmpDataList.jsp?empno="+empno);
+			xhr.send(); //비동기 전송 시작
+		}
+	
+	</script>
+</head>
+<body>
+	<h3>사원 검색(동기)</h3>
+	<a href="Ex09_EmpDataList.jsp?empno=7788">사원검색</a>
+	<hr>
+	<h3>사원 검색(비동기)</h3>
+	<select name="emp" id="emp" onchange="sendData()">
+		<option value="0000">SELECT EMPNO</option>
+		<option value="7788">SCOTT</option>
+		<option value="7902">FORD</option>
+		<option value="7521">WORD</option>
+	</select>
+	<hr>
+	<div id="txtdata"></div>
+</body>
+</html>

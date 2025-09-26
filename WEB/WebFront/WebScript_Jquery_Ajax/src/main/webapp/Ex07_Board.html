@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<style type="text/css" >
+			.wrap-loading{ 
+		    	/*로딩 이미지*/
+		        position: fixed;
+		        top:50%;
+		        left:50%;
+		        margin-left: -21px;
+		        margin-top: -21px;
+		    }
+		
+		    .display-none{ /*감추기*/
+		       display:none;
+		    }
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$.ajax(
+					{
+						url:"Ex07_board.json",
+						type:"post", //xmlHttpRequest > httpReq.open("post",url)
+						dataType:"json", //서버가 클라이언트에게 응답하는 형식 (Text: json,html....)
+						success:function(data){ //응답이 왔고 응답이 성공적이라면 (state 200)
+							console.log(data);
+						
+							$.each(data,function(index,obj){
+								$('#treedata').append(obj.id + "/" + obj.name + "/" + obj.title + "/" + obj.content + "<br>");
+							});
+						
+						},
+						error:function(xhr){ //응답이 왔고 그 응답이 500 , 404 , 403 이런 것들이면
+							console.log(xhr.status);
+						},
+						beforeSend:function(){ //readyState = 3 (서버에서 데이터가 오는 도중) .. 다른 작업 못하게 ..
+							//이미지를 보여주다가 (오는 도중이면 로딩이미지 제공하기)
+							console.log("img loading ...");
+							$('.wrap-loading').removeClass('display-none');//화면 출력(이미지가 )
+						},
+						complete:function(){ //readyState = 4 지구에 도착하면 
+							//이미지를 안보이게
+							console.log("img display none ...");
+							$('.wrap-loading').addClass('display-none');
+						}
+						
+					}
+			);
+		});
+	</script>
+</head>
+<body>
+		<!--  https://loading.io/ -->
+		<div class="wrap-loading display-none">
+	   	 	<div><img src="https://tistory2.daumcdn.net/tistory/1898109/skin/images/Spinner.gif" /></div>
+		</div>
+		<div id="treedata" >
+		
+		</div>	
+</body>
+</html>

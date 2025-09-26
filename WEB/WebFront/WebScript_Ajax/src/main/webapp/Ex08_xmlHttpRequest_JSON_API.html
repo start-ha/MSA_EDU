@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	 <style>
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+	<script type="text/javascript">
+	/*
+	1. XMLHttpRequest 객체 얻기
+		2. onreadystatechange 이벤트 핸들러 구현 (함수)
+		3. 요청 정보 ( open() )
+		4. 요청 보내기 (send() )
+		5. 응답 처리 (Text(JSON), xml )
+
+*/
+		let xhr = null;
+		function getInstance(){
+			  if(window.XMLHttpRequest){
+				  xhr = new XMLHttpRequest;
+			  }else if(window.ActiveXObject){ //IE
+				  console.log("IE");
+			  }else{
+				  throw new Error("Ajax 비동기 지원하지 않아요");
+			  }
+			return xhr;  
+		}
+		
+		function handlerStateChange(){
+			  if(xhr.readyState == 4){ //서버에서 응답이 왔다면
+				  if(xhr.status >= 200 && xhr.status < 300){ //응답이 성공적이라면
+					  //서버가 클라이언트에게 전달한 (응답한) 데이터 형식
+					  //1. Text(html,txt,css,json)  2. xml
+					  //가공 ..... JSON 가공 , XML 가공    (연습 : 플리커 ... , 공공데이터 ...)
+					  
+				      //1. Text(text, html , script , css , json ) >> xmlHttpRequest >> responseText
+				      //2. xml                                     >> xmlHttpRequest >> responseXml
+					  //3. 가공하기 전에 서버에서 온 데이터 확인 (테이블 출력 , Text 출력  ...요구사항 ...)
+					  console.log(xhr.responseText);
+				      //마음대로 가공
+					  document.getElementById("postDdata").innerHTML = createTable(JSON.parse(xhr.responseText));
+				      //서버에서 JSON 객체로 바꿔서 보냄      
+				      
+				      
+				    				      
+				  }else{
+					  console.log("비정상 응답 : " + xhr.status);
+				  }
+			  }
+		}
+		
+		function sendData(){
+			xhr = getInstance();
+			xhr.onreadystatechange = handlerStateChange; //이벤트에 함수전달  (x)
+			xhr.open("GET","https://jsonplaceholder.typicode.com/posts");
+			xhr.send(); //비동기 전송 시작
+		}
+		
+		function createTable(data) {
+		    let table = `<table>
+		      <thead>
+		        <tr>
+		          <th>User ID</th>
+		          <th>ID</th>
+		          <th>Title</th>
+		          <th>Body</th>
+		        </tr>
+		      </thead>
+		      <tbody>`;
+
+		    data.forEach(post => { //JSON객체
+		      table += `
+		        <tr>
+		          <td>${post.userId}</td>
+		          <td>${post.id}</td>
+		          <td>${post.title}</td>
+		          <td>${post.body}</td>
+		        </tr>`;
+		    });
+
+		    table += `</tbody></table>`;
+		    return table;
+		}
+	</script>
+</head>
+<body>
+		<button onclick="sendData()">비동기 요청</button>
+		<div id="postDdata"></div>
+</body>
+</html>

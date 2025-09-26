@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+	<script type="text/javascript">
+	//shorten 함수
+		$(function(){
+			$('#btn .btnload').click(function(){
+				$.getJSON("Ex04_json.json",function(data){
+					//응답이 왔고 응답이 정상 건이라면,
+					console.log(data);
+					//주작업 가공(출력)
+					$.each(data,function(index,obj){
+						$('#display').append(obj.num + "/" + obj.Name + "<br>");
+					})
+				});
+			});
+			//한칸 띄는 건 자손, >는 자식
+		});
+	
+	</script>
+</head>
+<body>
+	<div id ="btn">
+		<div class="btnload">JSON DATA LOAD</div>
+	</div>
+	<div id = "display"></div>
+</body>
+</html>
